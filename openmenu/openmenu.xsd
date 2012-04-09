@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:complexType name="image">
+    <xs:simpleContent>
+      <xs:extension base="xs:anyURI">
+        <xs:attribute name="width" />
+        <xs:attribute name="height" />
+        <xs:attribute name="media" use="required" type="xs:string" />
+        <xs:attribute name="type" use="required" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="company_data">
+    <xs:sequence>
+      <xs:element name="address_1" type="xs:string" />
+      <xs:element name="address_2" type="xs:string" minOccurs="0" />
+      <xs:element name="city_town" type="xs:string" />
+      <xs:element name="state_province" type="xs:string" minOccurs="0" />
+      <xs:element name="postal_code" type="xs:string" minOccurs="0" />
+      <xs:element name="country" type="xs:string" />
+      <xs:element name="phone" type="xs:string" minOccurs="0" />
+      <xs:element name="fax" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="omf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="openmenu" />
+        <xs:element ref="restaurant_info" />
+        <xs:element ref="menus" />
+      </xs:sequence>
+      <xs:attribute name="uuid" use="required" type="xs:string" />
+      <xs:attribute name="date_created" use="required" type="xs:string" /><!-- ??? created_date -->
+      <xs:attribute name="accuracy" use="required" type="xs:integer" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="openmenu">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version" type="xs:string" />
+        <xs:element ref="crosswalks" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="crosswalks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="crosswalk_id" type="xs:string" />
+        <xs:element name="crosswalk_name" type="xs:string" />
+        <xs:element name="crosswalk_url" type="xs:anyURI" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="restaurant_info">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="company_data">
+          <xs:sequence>
+            <xs:element name="restaurant_name" type="xs:string" />
+            <xs:element name="brief_description" type="xs:string" />
+            <xs:element name="full_description" type="xs:string" minOccurs="0" />
+            <xs:element name="business_type" type="xs:string" />
+            <xs:element name="location_id" type="xs:string" minOccurs="0" />
+            <xs:element ref="region_area" minOccurs="0" />
+            <xs:element name="longitude" type="xs:decimal" minOccurs="0" />
+            <xs:element name="latitude" type="xs:decimal" minOccurs="0" />
+            <xs:element name="utc_offset" type="xs:decimal" minOccurs="0" />
+            <xs:element name="website_url" type="xs:anyURI" minOccurs="0" />
+            <xs:element name="omf_file_url" type="xs:anyURI" />
+            <xs:element name="logo_urls" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="logo_url" type="image" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="environment">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="seating_qty" type="xs:integer" minOccurs="0" />
+                  <xs:element name="smoking_allowed" type="xs:integer" minOccurs="0" />
+                  <xs:element name="max_group_size" type="xs:integer" minOccurs="0" />
+                  <xs:element name="pets_allowed" type="xs:integer" minOccurs="0" />
+                  <xs:element name="age_level_preference" type="xs:string" minOccurs="0" />
+                  <xs:element name="dress_code" type="xs:string" minOccurs="0" />
+                  <xs:element name="cuisine_type_primary" type="xs:string" />
+                  <xs:element name="cuisine_type_secondary" type="xs:string" minOccurs="0" />
+                  <xs:element name="takeout_available" type="xs:integer" minOccurs="0" />
+                  <xs:element ref="delivery_available" minOccurs="0" />
+                  <xs:element name="catering_available" type="xs:integer" minOccurs="0" />
+                  <xs:element name="wheelchair_accessible" type="xs:string" minOccurs="0" />
+                  <xs:element name="reservations" type="xs:integer" minOccurs="0" />
+                  <xs:element name="alcohol_type" type="xs:string" minOccurs="0" />
+                  <xs:element name="music_type" type="xs:string" minOccurs="0" />
+                  <xs:element ref="parking" minOccurs="0" />
+                  <xs:element ref="seating_locations" />
+                  <xs:element ref="accepted_currencies" />
+                  <xs:element ref="online_reservations" minOccurs="0" />
+                  <xs:element ref="online_ordering" minOccurs="0" />
+                  <xs:element ref="operating_days" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+
+            <xs:element ref="parent_company" />
+            <xs:element ref="contacts" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="region_area">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string" />
+      <xs:attribute name="designation" use="required" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="delivery_available">
+    <xs:complexType>
+      <xs:attribute name="fee" use="required" />
+      <xs:attribute name="radius" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="parking">
+    <xs:complexType>
+      <xs:attribute name="street_free" type="xs:string" />
+      <xs:attribute name="street_metered" type="xs:string" />
+      <xs:attribute name="private_lot" type="xs:string" />
+      <xs:attribute name="garage" type="xs:string" />
+      <xs:attribute name="valet" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="seating_locations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="seating_location" type="xs:string" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="accepted_currencies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accepted_currency" type="xs:string" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="online_reservations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="online_reservation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="online_reservation_name" type="xs:string" />
+              <xs:element name="online_reservation_url" type="xs:anyURI" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="online_ordering">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="online_order">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="online_order_name" type="xs:string" />
+              <xs:element name="online_order_url" type="xs:anyURI" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="operating_days">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="operating_day" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="parent_company">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="company_data">
+          <xs:sequence>
+            <xs:element name="parent_company_name" type="xs:string" />
+            <xs:element name="parent_company_website" type="xs:anyURI" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="contacts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="contact" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="first_name" type="xs:string" />
+        <xs:element name="last_name" type="xs:string" minOccurs="0" />
+        <xs:element name="email" type="xs:string" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="operating_day">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="day_of_week" type="xs:integer" />
+        <xs:element name="open_time" type="xs:string" />
+        <xs:element name="close_time" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="menu" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_description" type="xs:string" minOccurs="0" />
+        <xs:element ref="menu_duration" />
+        <xs:element ref="menu_groups" />
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="uid" type="xs:integer" use="required" />
+      <xs:attribute name="currency_symbol" type="xs:string" use="required" />
+      <xs:attribute name="disabled" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_duration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_duration_name" type="xs:string" />
+        <xs:element name="menu_duration_time_start" type="xs:string" minOccurs="0" />
+        <xs:element name="menu_duration_time_end" type="xs:string" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_groups">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="menu_group" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_group">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_group_description" type="xs:string" minOccurs="0" />
+        <xs:element name="menu_group_options" minOccurs="0" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="menu_group_option" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="menu_items" />
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="uid" type="xs:integer" use="required" />
+      <xs:attribute name="disabled" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_group_option">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_group_option_information" type="xs:string" minOccurs="0" />
+        <xs:element ref="menu_group_option_item" />
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="min_selected" type="xs:decimal" />
+      <xs:attribute name="max_selected" type="xs:decimal" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_group_option_item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_group_option_name" type="xs:string" />
+        <xs:element name="menu_group_option_additional_cost" type="xs:decimal" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="menu_item" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_item_name" type="xs:string" minOccurs="0" />
+        <xs:element name="menu_item_description" type="xs:string" minOccurs="0" />
+        <xs:element name="menu_item_price" type="xs:string" minOccurs="0" />
+        <xs:element name="menu_item_calories" type="xs:integer" minOccurs="0" />
+        <xs:element name="menu_item_heat_index" type="xs:integer" minOccurs="0" />
+        <xs:element name="menu_item_allergy_information" minOccurs="0">
+          <xs:complexType mixed="true">
+            <xs:attribute name="allergens" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="menu_item_image_urls" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="menu_item_image_url" type="image" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="menu_item_sizes" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="menu_item_size">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="menu_item_size_name" type="xs:string" />
+                    <xs:element name="menu_item_size_description" type="xs:string" minOccurs="0" />
+                    <xs:element name="menu_item_size_price" type="xs:decimal" minOccurs="0" />
+                    <xs:element name="menu_item_size_calories" type="xs:decimal" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+
+        <xs:element name="menu_item_options" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="menu_item_option" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="menu_item_tags" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="menu_item_tag" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="uid" type="xs:integer" use="required" />
+      <xs:attribute name="disabled" type="xs:string" />
+      <xs:attribute name="special" type="xs:string" />
+      <xs:attribute name="vegetarian" type="xs:string" />
+      <xs:attribute name="vegan" type="xs:string" />
+      <xs:attribute name="kosher" type="xs:string" />
+      <xs:attribute name="halal" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_item_option">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_item_option_information" type="xs:string" minOccurs="0" />
+        <xs:element ref="menu_item_option_item" />
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="min_selected" type="xs:decimal" />
+      <xs:attribute name="max_selected" type="xs:decimal" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="menu_item_option_item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menu_item_option_name" type="xs:string" />
+        <xs:element name="menu_item_option_additional_cost" type="xs:decimal" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
