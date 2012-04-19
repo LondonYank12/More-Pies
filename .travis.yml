@@ -1,3 +1,8 @@
-language: perl
-perl:
-  - "5.10"
+language: "perl"
+before_script:
+notifications:
+  recipients:
+    owen.singleton@gmail.com 
+  email:
+    on_success: change
+    on_failure: always
