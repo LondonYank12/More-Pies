@@ -10,6 +10,9 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/Menu/Scraper.pm',
     build_requires => {
         'Test::More' => 0,
+	'XML::Writer'=> 0,
+	'IO::File'=>0,
+	'File::Basename'=>0
     },
     requires => {
         'perl' => 5.006,
