@@ -3,6 +3,9 @@ package Menu::Scraper;
 use 5.006;
 use strict;
 use warnings;
+my @file;
+my $file;
+my $menu;
 
 =head1 NAME
 
