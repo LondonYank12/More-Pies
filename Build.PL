@@ -11,6 +11,7 @@ my $builder = Module::Build->new(
     build_requires => {
         'Test::More' => 0,
 	'Test::XML' => 0,
+	'Test::XPath' =>0,
 	'XML::Writer'=> 0,
 	'XML::Writer::String'=> 0,
 	'IO::File'=>0,
