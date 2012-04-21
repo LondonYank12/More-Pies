@@ -9,8 +9,9 @@ my $builder = Module::Build->new(
     dist_author         => q{Owen Singleton <owen.singleton@gmail.com>},
     dist_version_from   => 'lib/Menu/Scraper.pm',
     build_requires => {
-        'Test::More' => 0,
+        #'Test::More' => 0,
 	'XML::Writer'=> 0,
+	'XML::Writer::String'=> 0,
 	'IO::File'=>0,
 	'File::Basename'=>0
     },
