@@ -108,7 +108,7 @@ sub get_menu_xml {
   
   $writer->startTag('environment');
   $writer->startTag('operating_days');
-  
+
   my $hours = $menu->{hours};
   foreach my $key (sort keys %$hours) {
   
@@ -133,7 +133,10 @@ sub get_menu_xml {
   $writer->endTag('operating_days');
   
   $writer->endTag('environment');
+  $writer->endTag('restaurant_info');
   
+  $writer->startTag('menus');
+  $writer->startTag('menu'); 
   my $items = $menu->{items};
   foreach my $key (sort keys %$items) {
     $writer->startTag('menu_item','uid'=>$key);
@@ -142,8 +145,8 @@ sub get_menu_xml {
     $writer->dataElement('menu_item_price', $items->{$key}->{price} );
     $writer->endTag('menu_item');
   }
-  
-  $writer->endTag('restaurant_info');
+  $writer->endTag('menu'); 
+  $writer->endTag('menus');
   
   $writer->endTag('omf');
   $writer->end();

@@ -1,6 +1,6 @@
 #!perl -T
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 use Test::XML;
 use Test::XPath;
 
@@ -14,3 +14,7 @@ is_well_formed_xml ( $xml, 'Check for valid XML');
 my $tx = new Test::XPath(xml=>$xml);
 $tx->ok( '/omf/restaurant_info/restaurant_name', 'There should be a restaurant_name');
 $tx->is( '/omf/restaurant_info/restaurant_name', 'Lime House Spice Exp...', 'Check name');
+$tx->ok( '/omf/menus', 'There should be a menu');
+
+
+print $xml;
