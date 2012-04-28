@@ -1,5 +1,8 @@
 language: "perl"
+
 before_script:
+  - mysql root < database/more_pies.ddl
+
 notifications:
   recipients:
     owen.singleton@gmail.com 

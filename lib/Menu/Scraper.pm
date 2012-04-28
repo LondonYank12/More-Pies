@@ -6,10 +6,14 @@ use warnings;
 use File::Basename;
 use XML::Writer;
 use XML::Writer::String;
+use XML::XSLT;
+use XML::Twig;
 
 my @file;
 my $file;
 my $menu;
+my $omg_xml;
+my $load_xml;
 
 =head1 NAME
 
@@ -89,8 +93,6 @@ sub get_menu {
 sub get_menu_xml {
   my $self = shift;
 
-  my $menu = get_menu();
-  
   my $xml = new XML::Writer::String;
   my $writer = XML::Writer->new(OUTPUT => $xml, NEWLINES=>0, DATA_MODE=>1);
   
@@ -151,11 +153,34 @@ sub get_menu_xml {
   $writer->endTag('omf');
   $writer->end();
 
-  return $xml->value();
+  $omg_xml = $xml->value();
+  return $omg_xml;
 
 }
 
 =head2 get_menu_xml
+
+=cut
+
+sub get_load_xml {
+  my $self = shift;
+
+  open FH, 'database_load.xsl' or die "Could not open file: $!\n";
+  my $xslt_doc = join("",<FH>);
+
+  my $xslt = new XML::XSLT(Source=>$xslt_doc, warnings=>1);
+
+  $xslt->transform($omg_xml) or die "Could not transform XML";
+  $load_xml = $xslt->toString();
+ # print $load_xml; 
+  my $twig = new XML::Twig(pretty_print=>'indented');
+  $twig->parse($load_xml);
+
+  return $twig->print();
+
+}
+
+=head2 get_load_xml
 
 =cut
 
@@ -226,6 +251,8 @@ sub _init {
 
 	$file = join("", <FH>);
 	close FH;
+
+  $menu = get_menu();
 
 }
 
