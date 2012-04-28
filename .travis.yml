@@ -1,7 +1,7 @@
 language: "perl"
 
 before_script:
-  - mysql root < database/more_pies.ddl
+  mysql root < database/more_pies.ddl
 
 notifications:
   recipients:
