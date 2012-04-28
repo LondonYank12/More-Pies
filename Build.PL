@@ -14,6 +14,7 @@ my $builder = Module::Build->new(
 	'Test::XPath' =>0,
 	'XML::Writer'=> 0,
 	'XML::Writer::String'=> 0,
+	'XML::XSLT' => 0,
 	'IO::File'=>0,
 	'File::Basename'=>0
     },
